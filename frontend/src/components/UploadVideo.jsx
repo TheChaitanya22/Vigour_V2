@@ -19,7 +19,7 @@ function UploadVideo() {
 
       try {
         const response = await axios.post(
-          "http://localhost:3000/upload",
+          "http://localhost:3000/creator/upload",
           {
             title,
             description,
@@ -67,17 +67,6 @@ function UploadVideo() {
         className="file-input w-full mb-2"
         onChange={(e) => setVideoFile(e.target.files[0])}
       />
-
-      <label className="label cursor-pointer">
-        <span className="label-text">Make public?</span>
-        <input
-          type="checkbox"
-          checked={isPublic}
-          onChange={(e) => setIsPublic(e.target.checked)}
-          className="checkbox"
-        />
-      </label>
-
       <button
         className="btn btn-primary w-full mt-4"
         onClick={handleVideoUpload}
