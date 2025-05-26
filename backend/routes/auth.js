@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const User = require("../config/db");
+const { User } = require("../config/db");
 const jwt = require("jsonwebtoken");
 const { registerSchema, loginSchema } = require("../config/validation");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
@@ -13,7 +13,7 @@ const { auth } = require("../middleware/auth");
 
 const app = express();
 app.use(passport.initialize());
-router.post("/register", async function (req, res) {
+router.post("/register", validate(registerSchema), async function (req, res) {
   const { email, password, role } = req.body;
 
   try {
@@ -39,7 +39,7 @@ router.post("/register", async function (req, res) {
 
     // Return jsonwebtoken
     const payload = {
-      id: user.id,
+      id: user._id,
       email: user.email,
       role: user.role,
     };
@@ -86,6 +86,7 @@ router.post("/login", validate(loginSchema), async function (req, res) {
 
     // Return jsonwebtoken
     const payload = {
+      id: user._id,
       email: user.email,
       role: user.role,
     };
@@ -97,7 +98,6 @@ router.post("/login", validate(loginSchema), async function (req, res) {
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
     );
-
     res.json({
       message: "Login Successful",
       token: token,

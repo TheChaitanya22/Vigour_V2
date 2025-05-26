@@ -10,36 +10,30 @@ function UploadVideo() {
   const handleVideoUpload = async () => {
     if (!videoFile) return alert("Please select a video");
 
-    // Convert to base64
-    const reader = new FileReader();
-    reader.readAsDataURL(videoFile);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("videoFile", videoFile);
+    formData.append("isPublic", isPublic);
 
-    reader.onloadend = async () => {
-      const base64Video = reader.result;
-
-      try {
-        const response = await axios.post(
-          "http://localhost:3000/creator/upload",
-          {
-            title,
-            description,
-            videoData: base64Video,
-            isPublic,
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/creator/upload",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
           },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        }
+      );
 
-        console.log("Uploaded successfully:", response.data);
-        alert("Video uploaded!");
-      } catch (error) {
-        console.error("Upload error:", error);
-        alert("Error uploading video");
-      }
-    };
+      console.log("Uploaded successfully:", response.data);
+      alert("Video uploaded!");
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Error uploading video");
+    }
   };
 
   return (
@@ -76,5 +70,4 @@ function UploadVideo() {
     </div>
   );
 }
-
 export default UploadVideo;
