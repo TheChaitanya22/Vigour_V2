@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -29,6 +29,22 @@ const videoSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Courses",
+      required: true,
+    },
+    videoOrder: {
+      type: Number,
+      required: true,
+    },
+    isPublic: {
+      type: Boolean,
+      default: false,
+    },
+    duration: {
+      type: Number,
+    },
     cloudinaryId: {
       type: String,
       required: true,
@@ -42,15 +58,75 @@ const videoSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    isPublic: {
+  },
+  { timestamps: true }
+);
+
+const courseSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    introVideo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Video",
+    },
+    thumbnail: {
+      type: String,
+    },
+    isPublished: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+    enrollmentCount: {
+      type: Number,
+      default: 0,
+    },
+    rating: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", UserSchema);
-const Video = mongoose.model("Video", videoSchema);
+const enrollmentSchema = new Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cousre",
+      required: true,
+    },
+    purchaseDate: {
+      type: Date,
+      default: Date.now,
+    },
+    status: {
+      type: String,
+      enum: ["acitve", "inactive"],
+      default: "active",
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = { User, Video };
+const User = mongoose.model("User", userSchema);
+const Video = mongoose.model("Video", videoSchema);
+const Course = mongoose.model("Course", courseSchema);
+const Enrollment = mongoose.model("Enrollment", enrollmentSchema);
+
+module.exports = { User, Video, Course, Enrollment };
