@@ -110,7 +110,7 @@ const ViewCourse = () => {
 
             {/* Video or Locked */}
             {video.locked ? (
-              <div className="flex items-center gap-2 text-red-500 font-medium text-gray-700">
+              <div className="flex items-center gap-2 text-red-500 font-medium">
                 <Lock className="w-5 h-5" />
                 <span>Locked</span>
               </div>
