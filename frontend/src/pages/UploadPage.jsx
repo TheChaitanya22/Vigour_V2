@@ -1,14 +1,14 @@
 import React from "react";
-import MakeCourse from "../components/MakeCourse";
+import AddVideo from "../components/AddVideo";
 import CoachSidebarDrawer from "../components/CoachDrawer";
 
-function CreateCourse() {
+function UploadPage() {
   return (
     <div>
       <CoachSidebarDrawer />
-      <MakeCourse />
+      <AddVideo />
     </div>
   );
 }
 
-export default CreateCourse;
+export default UploadPage;

@@ -17,7 +17,10 @@ const Hero = () => {
             a coach, we provide the tools to help you achieve your goals.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="px-6 py-2 sm:w-auto bg-white text-gray-800 cursor-pointer font-semibold rounded-lg shadow-md hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
+            <button
+              onClick={() => navigate("/browse")}
+              className="px-6 py-2 sm:w-auto bg-white text-gray-800 cursor-pointer font-semibold rounded-lg shadow-md hover:bg-gray-100 transition-all duration-200 transform hover:scale-105"
+            >
               Start Learning
             </button>
             <button

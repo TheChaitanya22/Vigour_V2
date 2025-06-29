@@ -23,7 +23,7 @@ const Login = () => {
       localStorage.setItem("role", role);
 
       if (role === "coach") {
-        navigate("/coach/create-course");
+        navigate("/coach/dashboard");
       } else if (role === "user") {
         navigate("/user/dashboard");
       }

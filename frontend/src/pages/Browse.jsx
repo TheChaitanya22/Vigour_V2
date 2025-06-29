@@ -1,6 +1,6 @@
 import React from "react";
-import Drawer from "../components/Drawer";
 import Courses from "../components/Courses";
+import UserSidebarDrawer from "../components/UserDrawer";
 
 function Browse() {
   return (

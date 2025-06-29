@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRef } from "react";
 import axios from "axios";
 import {
   Upload,
@@ -22,6 +23,7 @@ function AddVideo() {
   const [isPublic, setIsPublic] = useState(true);
   const [loading, setLoading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleVideoUpload = async () => {
     if (!videoFile) {
@@ -69,6 +71,9 @@ function AddVideo() {
           setVideoOrder("");
           setIsPublic(true);
           setUploadStatus(null);
+          if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+          }
         }, 2000);
       } else {
         throw new Error("Upload failed");
@@ -230,6 +235,7 @@ function AddVideo() {
                   type="file"
                   accept="video/*"
                   onChange={handleFileSelect}
+                  ref={fileInputRef}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
 

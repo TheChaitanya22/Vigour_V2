@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Lock, Play, Unlock, LoaderCircle } from "lucide-react";
+import UserSidebarDrawer from "../components/UserDrawer";
 
 const ViewCourse = () => {
   const { courseId } = useParams();
@@ -57,7 +58,7 @@ const ViewCourse = () => {
       );
 
       alert(res.data.message || "Enrolled successfully!");
-      fetchCourse(); // ✅ re-fetch course and unlock videos
+      fetchCourse();
     } catch (err) {
       if (err.response?.status === 401) {
         alert("Session expired. Please login again.");
@@ -78,19 +79,22 @@ const ViewCourse = () => {
 
   return (
     <div className="min-h-screen py-10 px-4 sm:px-10 bg-gradient-to-b from-white via-blue-50 to-blue-100">
-      <h1 className="text-4xl font-bold text-gray-800 mb-4">{course.title}</h1>
-      <p className="text-gray-700 mb-4">{course.description}</p>
+      {isEnrolled && <UserSidebarDrawer />}
+      <h1 className="text-4xl font-bold text-gray-800 mb-4 pl-10">
+        {course.title}
+      </h1>
+      <p className="text-gray-700 mb-4 pl-10">{course.description}</p>
 
       {!isEnrolled && (
         <button
           onClick={handleEnroll}
-          className="mb-6 px-6 py-2 text-white font-semibold bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow hover:scale-105 transition"
+          className="mb-6 px-6 ml-10 py-2 text-white font-semibold bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow hover:scale-105 transition"
         >
           Enroll Now
         </button>
       )}
 
-      <div className="grid gap-4">
+      <div className="grid gap-4 pl-10">
         {videos?.map((video, index) => (
           <div
             key={video.id}
@@ -106,7 +110,7 @@ const ViewCourse = () => {
 
             {/* Video or Locked */}
             {video.locked ? (
-              <div className="flex items-center gap-2 text-red-500 font-medium">
+              <div className="flex items-center gap-2 text-red-500 font-medium text-gray-700">
                 <Lock className="w-5 h-5" />
                 <span>Locked</span>
               </div>
