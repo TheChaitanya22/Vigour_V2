@@ -1,6 +1,9 @@
+import { Crown } from "lucide-react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <div className="hero min-h-screen bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#334155] text-white">
       <div className="hero-content text-center">
@@ -14,8 +17,16 @@ const Hero = () => {
             a coach, we provide the tools to help you achieve your goals.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="btn btn-secondary">Start Learning</button>
-            <button className="btn btn-outline">Become a Creator</button>
+            <button className="px-6 py-2 sm:w-auto bg-white text-gray-800 cursor-pointer font-semibold rounded-lg shadow-md hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
+              Start Learning
+            </button>
+            <button
+              onClick={() => navigate("/auth/register/creator")}
+              className="flex items-center justify-center cursor-pointer space-x-1 px-6 py-2 sm:w-auto bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg transform hover:scale-105"
+            >
+              <Crown className="w-4 h-4" />
+              <span>Become a Creator</span>
+            </button>
           </div>
         </div>
       </div>

@@ -2,14 +2,14 @@ import React from "react";
 import VideoCard from "../components/VideoCard";
 import Drawer from "../components/Drawer";
 import UploadVideo from "../components/UploadVideo";
+import MakeCourse from "../components/MakeCourse";
 
-function Creator_Dashboard() {
+function CreateCourse() {
   return (
     <div>
-      <Drawer label1={"My Couses"} label2={"Upload Course"} />
-      <UploadVideo />
+      <MakeCourse />
     </div>
   );
 }
 
-export default Creator_Dashboard;
+export default CreateCourse;

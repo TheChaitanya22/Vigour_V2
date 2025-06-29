@@ -2,13 +2,12 @@ import React from "react";
 import Drawer from "../components/Drawer";
 import Courses from "../components/Courses";
 
-function User_Dashboard() {
+function Browse() {
   return (
-    <div>
-      <Drawer label1={"All courses"} label2={"Purchased Courses"} />
+    <div className="bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden shadow-xl border-slate-700">
       <Courses />
     </div>
   );
 }
 
-export default User_Dashboard;
+export default Browse;

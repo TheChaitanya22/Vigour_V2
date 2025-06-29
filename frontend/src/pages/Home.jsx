@@ -3,11 +3,12 @@ import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import About from "../components/About";
 import Footer from "../components/Footer";
+import NavbarV2 from "../components/NavbarV2";
 
 function Home() {
   return (
     <div>
-      <Navbar />
+      <NavbarV2 />
       <Hero />
       <About />
       <Footer />

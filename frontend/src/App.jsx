@@ -4,9 +4,10 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Creator_Signup from "./pages/Creator_Signup";
 import User_Signup from "./pages/User_Signup";
-import Dashboard from "./pages/Creator_Dashboard";
-import User_Dashboard from "./pages/User_Dashboard";
-import Creator_Dashboard from "./pages/Creator_Dashboard";
+import User_Dashboard from "./pages/Browse";
+import CreateCourse from "./pages/CreateCourse";
+import AddVideo from "./pages/AddVideo";
+import ViewCourse from "./pages/ViewCourse";
 
 function App() {
   return (
@@ -17,8 +18,10 @@ function App() {
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register/user" element={<User_Signup />} />
           <Route path="/auth/register/creator" element={<Creator_Signup />} />
-          <Route path="/user/dashboard" element={<User_Dashboard />} />
-          <Route path="/coach/dashboard" element={<Creator_Dashboard />} />
+          <Route path="/browse" element={<User_Dashboard />} />
+          <Route path="/browse/:courseId" element={<ViewCourse />} />
+          <Route path="/coach/create-course" element={<CreateCourse />} />
+          <Route path="/coach/addvideo/:courseId" element={<AddVideo />} />
         </Routes>
       </BrowserRouter>
     </>

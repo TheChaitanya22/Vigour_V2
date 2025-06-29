@@ -1,60 +1,70 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BookOpen, Users } from "lucide-react";
 
-function Courses() {
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Courses = () => {
+  const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchVideos = async () => {
+    const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/videos");
-        setVideos(response.data);
-      } catch (error) {
-        console.error(
-          "Error fetching videos:",
-          error.response?.data || error.message
-        );
-      } finally {
-        setLoading(false);
+        const res = await axios.get("http://localhost:3000/user/browse");
+        setCourses(res.data.courses);
+      } catch (err) {
+        console.error("Failed to fetch courses", err);
       }
     };
-
-    fetchVideos();
+    fetchCourses();
   }, []);
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">All Courses</h1>
-
-      {loading ? (
-        <p>Loading...</p>
-      ) : videos.length === 0 ? (
-        <p>No videos available.</p>
-      ) : (
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {videos.map((video) => (
-            <div key={video._id} className="card bg-base-100 shadow-xl">
-              <figure className="w-full h-48 bg-black overflow-hidden">
-                <video
-                  controls
-                  className="w-full h-full object-cover"
-                  src={video.cloudinaryUrl}
-                />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{video.title}</h2>
-                <p>{video.description}</p>
-                <p className="text-sm text-gray-500">
-                  By {video.uploadedBy?.name || "Unknown"}
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-blue-100 py-10 px-4 sm:px-10">
+      <h2 className="text-4xl font-bold text-center text-gray-800 mb-10">
+        Explore Courses
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {courses.map((course) => (
+          <div
+            key={course._id}
+            className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-200 overflow-hidden"
+          >
+            <div className="p-6 space-y-2">
+              <h3 className="text-xl font-semibold text-blue-800">
+                {course.title}
+              </h3>
+              <p className="text-sm text-gray-500 mb-2">
+                by{" "}
+                <span className="font-medium">
+                  {course.createdBy?.email || "Creator"}
+                </span>
+              </p>
+              <div className="text-gray-600 text-sm space-y-1">
+                <p>
+                  📹 Videos:{" "}
+                  <span className="font-medium">
+                    {course.publicVideos} / {course.totalVideos}
+                  </span>
+                </p>
+                <p className="flex items-center gap-1">
+                  <Users className="w-4 h-4 text-blue-600" />
+                  Enrolled:{" "}
+                  <span className="font-medium">{course.enrollmentCount}</span>
                 </p>
               </div>
+              <button
+                onClick={() => navigate(`/browse/${course._id}`)}
+                className="mt-4 px-4 py-2 w-full text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg hover:scale-105 transition-all"
+              >
+                View Course
+              </button>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default Courses;
