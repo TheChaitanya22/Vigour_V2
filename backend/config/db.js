@@ -83,9 +83,14 @@ const courseSchema = new Schema(
     thumbnail: {
       type: String,
     },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     isPublished: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     enrollmentCount: {
       type: Number,
@@ -114,11 +119,6 @@ const enrollmentSchema = new Schema(
     purchaseDate: {
       type: Date,
       default: Date.now,
-    },
-    status: {
-      type: String,
-      enum: ["acitve", "inactive"],
-      default: "active",
     },
   },
   { timestamps: true }

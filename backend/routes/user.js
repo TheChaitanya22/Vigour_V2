@@ -1,11 +1,12 @@
 const express = require("express");
 const { Course, Enrollment, Video } = require("../config/db");
-const { optionalAuth } = require("../middleware/auth");
+const { optionalAuth, auth } = require("../middleware/auth");
 const router = express.Router();
+const cloudinary = require("../config/cloudinary");
 
 router.get("/browse", async (req, res) => {
   try {
-    const courses = await Course.find({ isPublished: true }) // Only show published courses
+    const courses = await Course.find()
       .populate("createdBy", "name email") // Get creator info
       .sort({ createdAt: -1 });
 
@@ -76,6 +77,7 @@ router.get("/browse/:courseId", async (req, res) => {
         ...course._doc,
         totalVideos,
         publicVideos,
+        createdBy: course.createdBy,
       },
       isEnrolled: !!isEnrolled,
       canAccessAllVideos: !!isEnrolled,
@@ -92,8 +94,9 @@ router.get("/browse/:courseId/videos", optionalAuth, async (req, res) => {
   try {
     let isEnrolled = false;
     const { courseId } = req.params;
-    const userId = req.user?.id;
 
+    const userId = req.user?.id;
+    console.log(userId);
     const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
@@ -128,9 +131,8 @@ router.get("/browse/:courseId/videos", optionalAuth, async (req, res) => {
         ? {
             directUrl: video.cloudinaryUrl,
             streamingUrl: cloudinary.url(video.cloudinaryId, {
-              resourse_type: "video",
-              streaming_profile: "full_hd",
-              format: "m3u8",
+              resource_type: "video",
+              format: "mp4",
             }),
             cloudinaryId: video.cloudinaryId,
           }
@@ -154,6 +156,7 @@ router.get("/browse/:courseId/videos", optionalAuth, async (req, res) => {
         : videos.filter((v) => v.isPublic).length,
     });
   } catch (error) {
+    console.error("Error fetching course videos:", error);
     res.status(500).json({
       message: "Server Error",
       error: error.message,
@@ -218,6 +221,26 @@ router.get(
     }
   }
 );
+
+router.post("/enroll/:courseId", auth, async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const userId = req.user.id;
+
+    const alreadyEnrolled = await Enrollment.findOne({ courseId, userId });
+    if (alreadyEnrolled) {
+      return res.status(400).json({ message: "Already enrolled" });
+    }
+
+    const enrollment = new Enrollment({ courseId, userId });
+    await enrollment.save();
+
+    res.status(201).json({ message: "Enrolled successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
 
 // Search courses
 router.get("/search", async (req, res) => {

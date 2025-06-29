@@ -8,72 +8,90 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const streamifier = require("streamifier");
 
-router.post("/courses", auth, isCoach, async (req, res) => {});
+router.post("/courses", auth, isCoach, async (req, res) => {
+  try {
+    const { title, description, price } = req.body;
 
-router.post(
-  "/upload",
-  auth,
-  isCoach,
-  upload.single("videoFile"),
-  async (req, res) => {
-    try {
-      const { title, description, courseId, videoOrder, isPublic } = req.body;
-
-      const course = await Course.findOne({
-        _id: courseId,
-        createdBy: req.user.id,
+    // Validation
+    if (!title || !description) {
+      return res.status(400).json({
+        message: "Title and description are required",
       });
-
-      if (!course) {
-        return res.status(403).json({
-          message: "Course not found or you don't have permission",
-        });
-      }
-
-      const isVideoPublic = isPublic === "true" || isPublic === true;
-      // Access the file from memory
-      const videoBuffer = req.file.buffer;
-
-      // Create a readable stream from the buffer
-      const stream = cloudinary.uploader.upload_stream(
-        {
-          resource_type: "video", // Specify that it's a video
-          folder: "coaching-videos", // Cloudinary folder
-        },
-        async (error, result) => {
-          if (error) {
-            return res
-              .status(500)
-              .json({ message: "Error uploading video", error: error.message });
-          }
-          console.log("req.user:", req.user);
-          // Create new video in the database
-          const newVideo = new Video({
-            title,
-            description,
-            courseId,
-            isPublic: isVideoPublic,
-            videoOrder: parseInt(videoOrder),
-            cloudinaryId: result.public_id,
-            cloudinaryUrl: result.secure_url,
-            uploadedBy: req.user.id,
-            duration: result.duration,
-          });
-
-          // Save video info to the database
-          const savedVideo = await newVideo.save();
-          res.status(201).json(savedVideo);
-        }
-      );
-
-      // Pipe the video buffer to the upload stream
-      streamifier.createReadStream(videoBuffer).pipe(stream);
-    } catch (error) {
-      console.error("Error uploading video:", error);
-      res.status(500).json({ message: "Server Error", error: error.message });
     }
+
+    const newCourse = new Course({
+      title,
+      description,
+      price: price || 0,
+      createdBy: req.user.id,
+    });
+
+    const savedCourse = await newCourse.save();
+    res.status(201).json({ courseId: savedCourse._id });
+  } catch (error) {
+    console.error("Error creating course:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
   }
-);
+});
+
+router.post("/upload", auth, upload.single("videoFile"), async (req, res) => {
+  try {
+    const { title, description, courseId, videoOrder, isPublic } = req.body;
+    console.log(courseId);
+    const course = await Course.findOne({
+      _id: courseId,
+      createdBy: req.user.id,
+    });
+
+    if (!course) {
+      return res.status(403).json({
+        message: "Course not found or you don't have permission",
+      });
+    }
+
+    const isVideoPublic = isPublic === "true" || isPublic === true;
+    // Access the file from memory
+    const videoBuffer = req.file.buffer;
+
+    // Create a readable stream from the buffer
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        resource_type: "video", // Specify that it's a video
+        folder: "coaching-videos", // Cloudinary folder
+      },
+      async (error, result) => {
+        if (error) {
+          return res
+            .status(500)
+            .json({ message: "Error uploading video", error: error.message });
+        }
+        console.log("req.user:", req.user);
+        // Create new video in the database
+        const newVideo = new Video({
+          title,
+          description,
+          courseId,
+          isPublic: isVideoPublic,
+          videoOrder: parseInt(videoOrder),
+          cloudinaryId: result.public_id,
+          cloudinaryUrl: result.secure_url,
+          uploadedBy: req.user.id,
+          duration: result.duration,
+        });
+
+        // Save video info to the database
+        const savedVideo = await newVideo.save();
+        res.status(201).json(savedVideo);
+      }
+    );
+
+    // Pipe the video buffer to the upload stream
+    streamifier.createReadStream(videoBuffer).pipe(stream);
+  } catch (error) {
+    console.error("Error uploading video:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+});
 
 router.get("/my-courses", auth, isCoach, async (req, res) => {
   try {
