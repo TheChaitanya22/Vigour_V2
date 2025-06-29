@@ -109,38 +109,34 @@ router.get("/browse/:courseId/videos", optionalAuth, async (req, res) => {
       });
     }
 
-    let videos;
+    const videos = await Video.find({ courseId }).sort({ videoOrder: 1 });
 
-    if (isEnrolled) {
-      videos = await Video.find({ courseId }).sort({ videoOrder: 1 });
-    } else {
-      videos = await Video.find({ courseId, isPublic: true }).sort({
-        videoOrder: 1,
-      });
-    }
+    const videosWithUrls = videos.map((video) => {
+      const isAccessible = isEnrolled || video.isPublic;
 
-    const videosWithUrls = videos.map((video) => ({
-      id: video._id,
-      title: video.title,
-      description: video.description,
-      duration: video.duration,
-      videoOrder: video.videoOrder,
-      isPublic: video.isPublic,
+      return {
+        id: video._id,
+        title: video.title,
+        description: video.description,
+        duration: video.duration,
+        videoOrder: video.videoOrder,
+        isPublic: video.isPublic,
+        locked: !isAccessible,
 
-      ...(isEnrolled || video.isPublic
-        ? {
-            directUrl: video.cloudinaryUrl,
-            streamingUrl: cloudinary.url(video.cloudinaryId, {
-              resource_type: "video",
-              format: "mp4",
-            }),
-            cloudinaryId: video.cloudinaryId,
-          }
-        : {
-            locked: true,
-            message: "Enroll to access this video",
+        ...(isAccessible && {
+          directUrl: video.cloudinaryUrl,
+          streamingUrl: cloudinary.url(video.cloudinaryId, {
+            resource_type: "video",
+            format: "mp4",
           }),
-    }));
+          cloudinaryId: video.cloudinaryId,
+        }),
+
+        ...(!isAccessible && {
+          message: "Enroll to access this video",
+        }),
+      };
+    });
 
     res.json({
       course: {
