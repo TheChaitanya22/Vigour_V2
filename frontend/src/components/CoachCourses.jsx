@@ -72,24 +72,24 @@ const CoachCourses = () => {
               <div className="flex items-end gap-10">
                 <button
                   onClick={() => navigate(`/coach/addvideo/${course._id}`)}
-                  className="mt-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-green-600 to-green-700 rounded-lg hover:scale-105 transition-all"
+                  className="mt-4 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-green-600 to-green-700 rounded-lg hover:scale-105 transition-all flex gap-2"
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus className="w-4 h-5" />
                   Add Video
                 </button>
                 <button
                   onClick={() =>
                     navigate(`/coach/dashboard/${course._id}/videos`)
                   }
-                  className="mt-4 px-4 py-2 w-auto text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg hover:scale-105 transition-all"
+                  className="mt-4 px-4 py-2 w-auto text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg hover:scale-105 transition-all"
                 >
                   View Course
                 </button>
                 <button
                   onClick={() => deleteCourse(course._id)}
-                  className="mt-4 sm:mt-0 btn btn-error text-white flex items-center gap-2"
+                  className="mt-4 px-4 py-2 w-auto text-sm font-medium text-white bg-gradient-to-r from-red-400 to-red-500 rounded-lg hover:scale-105 transition-all flex gap-2"
                 >
-                  <Trash2 className="w-4 h-4" /> Delete
+                  <Trash2 className="w-4 h-5" /> Delete
                 </button>
               </div>
             </div>

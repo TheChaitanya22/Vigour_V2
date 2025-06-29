@@ -83,7 +83,7 @@ function NavbarV2() {
           <div className="pt-4 space-y-3">
             {/* Mobile Navigation Links */}
             <button
-              onClick={() => handleNavClick("courses")}
+              onClick={() => navigate("/browse")}
               className="flex items-center space-x-2 w-full text-left px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 font-medium"
             >
               <BookOpen className="w-5 h-5" />
@@ -91,7 +91,7 @@ function NavbarV2() {
             </button>
 
             <button
-              onClick={() => handleNavClick("register-creator")}
+              onClick={() => navigate("/auth/register/creator")}
               className="flex items-center space-x-2 w-full text-left px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 font-medium"
             >
               <Crown className="w-5 h-5" />
@@ -101,7 +101,7 @@ function NavbarV2() {
             {/* Mobile Auth Buttons */}
             <div className="pt-3 space-y-3 border-t border-blue-100">
               <button
-                onClick={() => handleNavClick("signup")}
+                onClick={() => navigate("/auth/register/user")}
                 className="flex items-center space-x-2 w-full text-left px-4 py-3 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all duration-200 font-medium"
               >
                 <UserPlus className="w-5 h-5" />
@@ -109,7 +109,7 @@ function NavbarV2() {
               </button>
 
               <button
-                onClick={() => handleNavClick("login")}
+                onClick={() => navigate("/auth/login")}
                 className="flex items-center justify-center space-x-2 w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all duration-200 font-medium shadow-md"
               >
                 <LogIn className="w-5 h-5" />
