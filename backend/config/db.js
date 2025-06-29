@@ -113,7 +113,7 @@ const enrollmentSchema = new Schema(
     },
     courseId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Cousre",
+      ref: "Course",
       required: true,
     },
     purchaseDate: {

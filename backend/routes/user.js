@@ -52,7 +52,7 @@ router.get("/browse/:courseId", async (req, res) => {
 
     const course = await Course.findById(courseId).populate(
       "createdBy",
-      "name email"
+      "email"
     );
 
     if (!course) {
@@ -239,6 +239,39 @@ router.post("/enroll/:courseId", auth, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+router.get("/enrolled-courses", auth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const enrollments = await Enrollment.find({ userId })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "courseId",
+        populate: {
+          path: "createdBy",
+          select: "name email",
+        },
+      });
+
+    const courses = enrollments.map((enroll) => {
+      const course = enroll.courseId;
+      return {
+        id: course._id,
+        title: course.title,
+        description: course.description,
+        createdBy: course.createdBy,
+        price: course.price,
+        enrollmentDate: enroll.createdAt,
+      };
+    });
+
+    res.json({ enrolledCourses: courses });
+  } catch (error) {
+    console.error("Failed to fetch enrolled courses", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
   }
 });
 

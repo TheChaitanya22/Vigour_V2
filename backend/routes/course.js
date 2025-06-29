@@ -145,8 +145,7 @@ router.get("/courses/:courseId/videos", auth, isCoach, async (req, res) => {
       directUrl: video.cloudinaryUrl,
       streamingUrl: cloudinary.url(video.cloudinaryId, {
         resource_type: "video",
-        streaming_profile: "full_hd",
-        format: "m3u8",
+        format: "mp4",
       }),
     }));
 
@@ -188,8 +187,7 @@ router.get("/videos/:videoId", auth, isCoach, async (req, res) => {
       directUrl: video.cloudinaryUrl,
       streamingUrl: cloudinary.url(video.cloudinaryId, {
         resource_type: "video",
-        streaming_profile: "full_hd",
-        format: "m3u8",
+        format: "mp4",
       }),
     };
 
@@ -318,6 +316,38 @@ router.get("/courses/:courseId/analytics", auth, isCoach, async (req, res) => {
     };
 
     res.json(analytics);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+});
+
+router.delete("/courses/:courseId", auth, isCoach, async (req, res) => {
+  try {
+    const course = await Course.findOneAndDelete({
+      _id: req.params.courseId,
+      createdBy: req.user.id,
+    });
+
+    if (!course) {
+      return res
+        .status(403)
+        .json({ message: "Course not found or access denied" });
+    }
+    const videos = await Video.find({ courseId: course._id });
+
+    await Promise.all(
+      videos
+        .filter((video) => video.cloudinaryId)
+        .map((video) =>
+          cloudinary.uploader.destroy(video.cloudinaryId, {
+            resource_type: "video",
+          })
+        )
+    );
+    await Video.deleteMany({ courseId: req.params.courseId });
+    await Enrollment.deleteMany({ courseId: req.params.courseId });
+
+    res.json({ message: "Course deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
