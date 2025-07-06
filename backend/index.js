@@ -8,7 +8,7 @@ const { mainRouter } = require("./routes/index");
 
 const app = express();
 const allowedOrigins = [
-  "http://loalhost:5173",
+  "http://localhost:5173",
   "https://vigour-chaitanya.vercel.app",
 ];
 app.use(
