@@ -1,8 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const cors = require("cors");
 const { mainRouter } = require("./routes/index");
 

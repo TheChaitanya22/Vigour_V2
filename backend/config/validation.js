@@ -9,13 +9,11 @@ const registerSchema = z.object({
   }),
 });
 
-// Login schema
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z.string().min(1, { message: "Password is required" }),
 });
 
-// JWT payload schema
 const jwtPayloadSchema = z.object({
   email: z.string().email(),
   role: z.enum(["user", "coach"]),

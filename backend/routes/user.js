@@ -270,45 +270,6 @@ router.get("/enrolled-courses", auth, async (req, res) => {
   }
 });
 
-// Search courses
-router.get("/search", async (req, res) => {
-  try {
-    const { q, category, level } = req.query;
-
-    let searchQuery = { isPublished: true };
-
-    if (q) {
-      searchQuery.$or = [
-        { title: { $regex: q, $options: "i" } },
-        { description: { $regex: q, $options: "i" } },
-      ];
-    }
-
-    if (category) {
-      searchQuery.category = category;
-    }
-
-    if (level) {
-      searchQuery.level = level;
-    }
-
-    const courses = await Course.find(searchQuery)
-      .populate("createdBy", "name")
-      .sort({ createdAt: -1 })
-      .limit(20);
-
-    res.json({
-      courses,
-      total: courses.length,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Server Error",
-      error: error.message,
-    });
-  }
-});
-
 module.exports = {
   userRouter: router,
 };

@@ -1,7 +1,6 @@
 const { jwtPayloadSchema } = require("../config/validation");
 const jwt = require("jsonwebtoken");
 
-// Middleware to authenticate JWT token
 const auth = (req, res, next) => {
   const token = req.header("Authorization")?.split(" ")[1];
 
@@ -21,7 +20,6 @@ const auth = (req, res, next) => {
   }
 };
 
-// Middleware to check if user is a coach
 function isCoach(req, res, next) {
   if (req.user.role !== "coach") {
     return res
