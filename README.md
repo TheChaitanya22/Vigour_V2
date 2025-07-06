@@ -5,6 +5,9 @@ A full-stack MERN application that enables course creators (coaches) to upload a
 ## 🔗 Live Demo
 👉 https://vigour-chaitanya.vercel.app
 
+For Demo: email: user@gmail.com       pass: user123
+          email: creator@gmail.com    pass: creator123 
+
 ## 🚀 Features
 - Role-based access for **Coaches** and **Students**
 - **JWT Authentication** for secure login/signup
