@@ -22,8 +22,9 @@ function App() {
           <Route path="/auth/register/user" element={<User_Signup />} />
           <Route path="/auth/register/creator" element={<Creator_Signup />} />
           <Route path="/browse" element={<Browse />} />
-          <Route path="/user/dashboard" element={<UserDashPage />} />
           <Route path="/browse/:courseId" element={<ViewCourse />} />
+          <Route path="/user/dashboard" element={<UserDashPage />} />
+
           <Route path="/coach/dashboard" element={<CoachDashPage />} />
           <Route
             path="/coach/dashboard/:courseId/videos"

@@ -9,11 +9,6 @@ function NavbarV2() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleNavClick = (section) => {
-    console.log(`Navigating to: ${section}`);
-    setIsMenuOpen(false); // Close mobile menu after clicking
-  };
-
   return (
     <nav className="bg-white shadow-lg border-b border-blue-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

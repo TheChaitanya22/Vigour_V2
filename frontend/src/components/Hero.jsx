@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 const Hero = () => {
   const navigate = useNavigate();
   return (
-    <div className="hero min-h-screen bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#334155] text-white">
-      <div className="hero-content text-center">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#334155] text-white">
+      <div className="text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold mb-4">
             Unleash Your Full Potential with Vigour
