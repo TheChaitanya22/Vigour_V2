@@ -11,12 +11,18 @@ app.use(cors());
 app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
 app.use("/", mainRouter);
 
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
-  app.listen(process.env.PORT || 3000);
-  console.log(`Server Started on port 3000; Database connected`);
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} & Database connected`);
+  });
 }
 
 main();

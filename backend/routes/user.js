@@ -96,7 +96,6 @@ router.get("/browse/:courseId/videos", optionalAuth, async (req, res) => {
     const { courseId } = req.params;
 
     const userId = req.user?.id;
-    console.log(userId);
     const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ message: "Course not found" });

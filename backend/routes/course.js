@@ -37,7 +37,6 @@ router.post("/courses", auth, isCoach, async (req, res) => {
 router.post("/upload", auth, upload.single("videoFile"), async (req, res) => {
   try {
     const { title, description, courseId, videoOrder, isPublic } = req.body;
-    console.log(courseId);
     const course = await Course.findOne({
       _id: courseId,
       createdBy: req.user.id,
@@ -65,7 +64,6 @@ router.post("/upload", auth, upload.single("videoFile"), async (req, res) => {
             .status(500)
             .json({ message: "Error uploading video", error: error.message });
         }
-        console.log("req.user:", req.user);
         // Create new video in the database
         const newVideo = new Video({
           title,
