@@ -12,11 +12,14 @@ function User_Signup() {
   const handleSignup = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3000/auth/register", {
-        email,
-        password,
-        role: "user",
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
+        {
+          email,
+          password,
+          role: "user",
+        }
+      );
       localStorage.setItem("token", response.data.token);
       navigate("/user/dashboard");
     } catch (error) {

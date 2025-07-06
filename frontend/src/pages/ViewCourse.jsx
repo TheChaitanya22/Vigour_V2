@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { Lock, Play, Unlock, LoaderCircle } from "lucide-react";
+import { Lock, LoaderCircle } from "lucide-react";
 import UserSidebarDrawer from "../components/UserDrawer";
 
 const ViewCourse = () => {
@@ -23,7 +23,7 @@ const ViewCourse = () => {
           }
         : {};
       const res = await axios.get(
-        `http://localhost:3000/user/browse/${courseId}/videos`,
+        `${import.meta.env.VITE_API_BASE_URL}/user/browse/${courseId}/videos`,
         config
       );
       setCourse(res.data.course);
@@ -48,7 +48,7 @@ const ViewCourse = () => {
     }
     try {
       const res = await axios.post(
-        `http://localhost:3000/user/enroll/${courseId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/user/enroll/${courseId}`,
         {},
         {
           headers: {

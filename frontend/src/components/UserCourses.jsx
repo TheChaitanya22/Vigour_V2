@@ -11,7 +11,7 @@ const UserCourses = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "http://localhost:3000/user/enrolled-courses",
+        `${import.meta.env.VITE_API_BASE_URL}/user/enrolled-courses`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

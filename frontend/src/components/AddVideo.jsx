@@ -49,7 +49,7 @@ function AddVideo() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/creator/upload",
+        `${import.meta.env.VITE_API_BASE_URL}/creator/upload`,
         formData,
         {
           headers: {

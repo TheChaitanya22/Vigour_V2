@@ -11,11 +11,14 @@ const CoachCourses = () => {
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:3000/creator/my-courses", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/creator/my-courses`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setCourses(res.data);
     } catch (error) {
       console.error("Failed to load courses", error);
@@ -31,11 +34,14 @@ const CoachCourses = () => {
     if (!confirm) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/creator/courses/${courseId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/creator/courses/${courseId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setCourses((prev) => prev.filter((course) => course._id !== courseId));
     } catch (error) {
       alert("Failed to delete course");

@@ -36,7 +36,7 @@ function MakeCourse() {
       };
 
       const response = await axios.post(
-        "http://localhost:3000/creator/courses",
+        `${import.meta.env.VITE_API_BASE_URL}/creator/courses`,
         courseData,
         {
           headers: {

@@ -12,7 +12,9 @@ const CourseVideos = () => {
   const fetchCourseVideos = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/creator/courses/${courseId}/videos`,
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/creator/courses/${courseId}/videos`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
