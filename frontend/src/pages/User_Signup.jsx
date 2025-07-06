@@ -66,7 +66,7 @@ function User_Signup() {
           <button
             onClick={handleSignup}
             disabled={loading}
-            className="w-full px-6 py-3 text-white font-semibold bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full px-6 py-3 text-white font-semibold bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow hover:scale-105 transition flex items-center justify-center gap-2 cursor-pointer"
           >
             {loading ? (
               <>

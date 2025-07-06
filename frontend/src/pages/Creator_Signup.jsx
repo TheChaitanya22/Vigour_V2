@@ -77,6 +77,18 @@ function Creator_Signup() {
               "Signup"
             )}
           </button>
+
+          <div className="mt-5 text-center">
+            <p className="text-gray-600 text-sm">
+              Already have an account?{" "}
+              <span
+                className="text-blue-600 hover:underline cursor-pointer font-medium"
+                onClick={() => navigate("/auth/login")}
+              >
+                Login
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
