@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Hero = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#334155] text-white">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#0f172a] via-[#1e293b] to-[#20467b] text-white">
       <div className="text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold mb-4">
