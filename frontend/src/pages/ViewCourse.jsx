@@ -83,7 +83,9 @@ const ViewCourse = () => {
       <h1 className="text-4xl font-bold text-gray-800 mb-4 pl-10">
         {course.title}
       </h1>
-      <p className="text-gray-700 mb-4 pl-10">{course.description}</p>
+      <p className="text-gray-700 text-2xl mb-4 ml-5 pl-10">
+        {course.description}
+      </p>
 
       {!isEnrolled && (
         <button
@@ -96,16 +98,15 @@ const ViewCourse = () => {
 
       <div className="grid gap-4 pl-10">
         {videos?.map((video, index) => (
-          <div
-            key={video.id}
-            className="bg-white rounded-xl shadow p-4" // removed flex here
-          >
+          <div key={video.id} className="bg-white rounded-xl shadow p-4">
             {/* Title + Description */}
             <div className="w-full">
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="text-3xl font-semibold text-gray-800">
                 {index + 1}. {video.title}
               </h3>
-              <p className="text-sm text-gray-500 mb-4">{video.description}</p>
+              <p className="text-xl text-gray-500 my-4 ml-7 ">
+                {video.description}
+              </p>
             </div>
 
             {/* Video or Locked */}
@@ -115,18 +116,20 @@ const ViewCourse = () => {
                 <span>Locked</span>
               </div>
             ) : (
-              <div className="w-full">
-                <video
-                  controls
-                  controlsList="nodownload"
-                  className="rounded-lg w-5xl"
-                >
-                  <source
-                    src={video.streamingUrl || video.directUrl}
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
+              <div className="w-full flex justify-start">
+                <div className="w-full max-w-4xl aspect-video overflow-hidden rounded-lg">
+                  <video
+                    controls
+                    controlsList="nodownload"
+                    className="w-full h-full object-cover"
+                  >
+                    <source
+                      src={video.streamingUrl || video.directUrl}
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             )}
           </div>
