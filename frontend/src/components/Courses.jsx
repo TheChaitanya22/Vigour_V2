@@ -28,8 +28,13 @@ const Courses = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-gray-600">
-        <Loader />
+      <div className="min-h-screen bg-gradient-to-b from-white via-blue-100 to-blue-200 py-10 px-4 sm:px-10">
+        <h2 className="text-4xl font-bold text-center text-gray-800 mb-10">
+          Explore Courses
+        </h2>
+        <div className="min-h-screen flex items-start justify-center text-gray-600">
+          <Loader />
+        </div>
       </div>
     );
   }
