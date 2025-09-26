@@ -142,6 +142,7 @@ router.get("/browse/:courseId/videos", optionalAuth, async (req, res) => {
         id: course._id,
         title: course.title,
         description: course.description,
+        price: course.price,
       },
       videos: videosWithUrls,
       isEnrolled: !!isEnrolled,
