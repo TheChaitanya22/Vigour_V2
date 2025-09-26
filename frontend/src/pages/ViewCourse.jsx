@@ -83,9 +83,7 @@ const ViewCourse = () => {
       <h1 className="text-4xl font-bold text-gray-800 mb-4 pl-10">
         {course.title}
       </h1>
-      <p className="text-gray-700 text-2xl mb-4 ml-5 pl-10">
-        {course.description}
-      </p>
+      <p className="text-gray-700 text-2xl mb-4 pl-10">{course.description}</p>
 
       {!isEnrolled && (
         <button
@@ -104,9 +102,7 @@ const ViewCourse = () => {
               <h3 className="text-3xl font-semibold text-gray-800">
                 {index + 1}. {video.title}
               </h3>
-              <p className="text-xl text-gray-500 my-4 ml-7 ">
-                {video.description}
-              </p>
+              <p className="text-xl text-gray-500 my-4 ">{video.description}</p>
             </div>
 
             {/* Video or Locked */}
