@@ -92,7 +92,7 @@ const ViewCourse = () => {
           onClick={handleEnroll}
           className="mb-6 px-6 ml-10 py-2 text-white font-semibold bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow hover:scale-105 transition"
         >
-          Enroll Now
+          Enroll Now only for ₹{course.price}
         </button>
       )}
 

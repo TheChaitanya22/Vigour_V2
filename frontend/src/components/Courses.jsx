@@ -83,6 +83,7 @@ const Courses = () => {
                   Enrolled:{" "}
                   <span className="font-medium">{course.enrollmentCount}</span>
                 </p>
+                <p className="text-xl text-black">₹ {course.price}</p>
               </div>
               <button
                 onClick={() => navigate(`/browse/${course._id}`)}
