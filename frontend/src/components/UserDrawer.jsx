@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, BookOpenCheck, BookOpen, User, LogOut } from "lucide-react";
 
-const UserSidebarDrawer = ({ children }) => {
+const UserSidebarDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();

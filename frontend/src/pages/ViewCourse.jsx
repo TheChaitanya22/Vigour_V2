@@ -12,9 +12,10 @@ const ViewCourse = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token");
+
   const fetchCourse = async () => {
     try {
-      const token = localStorage.getItem("token");
       const config = token
         ? {
             headers: {
@@ -40,8 +41,6 @@ const ViewCourse = () => {
   }, [courseId]);
 
   const handleEnroll = async () => {
-    const token = localStorage.getItem("token");
-
     if (!token) {
       navigate("/auth/login");
       return;
@@ -79,7 +78,7 @@ const ViewCourse = () => {
 
   return (
     <div className="min-h-screen py-10 px-4 sm:px-10 bg-gradient-to-b from-white via-blue-50 to-blue-100">
-      {isEnrolled && <UserSidebarDrawer />}
+      {token && <UserSidebarDrawer />}
       <h1 className="text-4xl font-bold text-gray-800 mb-4 pl-10">
         {course.title}
       </h1>

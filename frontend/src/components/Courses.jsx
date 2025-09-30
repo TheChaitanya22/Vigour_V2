@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BookOpen, Loader, Users } from "lucide-react";
+import { Loader, Users } from "lucide-react";
+import UserSidebarDrawer from "./UserDrawer";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -52,6 +54,7 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-blue-100 to-blue-200 py-10 px-4 sm:px-10">
+      {token && <UserSidebarDrawer />}
       <h2 className="text-4xl font-bold text-center text-gray-800 mb-10">
         Explore Courses
       </h2>
