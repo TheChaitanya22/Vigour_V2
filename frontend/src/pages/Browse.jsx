@@ -4,7 +4,7 @@ import UserSidebarDrawer from "../components/UserDrawer";
 
 function Browse() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-blue-100 to-blue-300 py-10 px-4 sm:px-10">
+    <div className="min-h-screen">
       <Courses />
     </div>
   );

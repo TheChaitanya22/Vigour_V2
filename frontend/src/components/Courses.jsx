@@ -15,7 +15,8 @@ const Courses = () => {
     const fetchCourses = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/user/browse`
+          `${import.meta.env.VITE_API_BASE_URL}/user/browse`,
+          { timeout: 4000 }
         );
         setCourses(res.data.courses);
       } catch (err) {
@@ -44,8 +45,8 @@ const Courses = () => {
   if (error || courses.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center text-center px-4">
-        <p className="text-lg font-medium text-red-600">
-          Couldn’t fetch courses. The backend might be down (might take upto
+        <p className="text-2xl font-semibold text-red-600">
+          Server is waking up... Please Wait or Refresh.(might take upto
           2minutes).
         </p>
       </div>
@@ -53,7 +54,7 @@ const Courses = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-blue-100 to-blue-200 py-10 px-4 sm:px-10">
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-blue-200 py-10 px-4 sm:px-10">
       {token && <UserSidebarDrawer />}
       <h2 className="text-4xl font-bold text-center text-gray-800 mb-10">
         Explore Courses
